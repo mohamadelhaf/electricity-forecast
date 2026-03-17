@@ -1,0 +1,17 @@
+torch
+lightning
+pytorch-forecasting
+entsoe-py
+numpy
+pandas
+scikit-learn
+joblib
+xgboost
+requests
+streamlit
+plotly
+matplotlib
+pyarrow
+torchaudio
+torchvision
+transformers
