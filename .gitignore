@@ -1,1 +1,12 @@
-.venv
+__pycache__/
+*.pyc
+.venv/
+checkpoints/
+lightning_logs/
+*.npy
+*.parquet
+*.pth
+*.pkl
+.cache.sqlite
+training_results.png
+.env
