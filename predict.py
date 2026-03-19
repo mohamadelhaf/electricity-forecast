@@ -4,6 +4,8 @@ import pandas as pd
 import torch
 import joblib
 import requests
+
+torch.set_float32_matmul_precision('high')
 from datetime import datetime, timedelta
 from entsoe import EntsoePandasClient
 
@@ -139,11 +141,18 @@ raw_preds = model.predict(dl, mode='raw', return_x=True, trainer_kwargs=dict(acc
 predictions = raw_preds.output
 if isinstance(predictions, dict):
     pred_tensor = predictions['prediction']
+elif isinstance(predictions, (tuple, list)):
+    pred_tensor = predictions[0]
+elif hasattr(predictions, 'prediction'):
+    pred_tensor = predictions.prediction
 else:
     pred_tensor = predictions
 
 # QuantileLoss default quantiles: [0.02, 0.1, 0.25, 0.5, 0.75, 0.9, 0.98]
-pred_np = pred_tensor.cpu().numpy()
+if hasattr(pred_tensor, 'cpu'):
+    pred_np = pred_tensor.cpu().numpy()
+else:
+    pred_np = np.array(pred_tensor)
 
 # Take the last prediction window (most recent)
 last_pred = pred_np[-1]  # shape: (prediction_length, n_quantiles)
@@ -158,7 +167,10 @@ q98  = last_pred[:, 6]
 # Get actual values for comparison (if available in the dataset)
 actuals_list = []
 for x, y in dl:
-    actuals_list.append(y[0].cpu().numpy())
+    if isinstance(y, (tuple, list)):
+        actuals_list.append(y[0].cpu().numpy())
+    else:
+        actuals_list.append(y.cpu().numpy())
 actuals = np.concatenate(actuals_list, axis=0)
 last_actual = actuals[-1]  # shape: (prediction_length,)
 
