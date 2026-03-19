@@ -168,7 +168,7 @@ def train_tft_fold(train_data, val_data, fold_label=''):
         accelerator='auto',
         enable_model_summary=False,
         callbacks=[early_stop, checkpoint, epoch_logger],
-        enable_progress_bar=False,
+        enable_progress_bar=True,
         log_every_n_steps=50,
         gradient_clip_val=0.1,
     )

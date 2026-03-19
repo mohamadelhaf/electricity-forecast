@@ -1,0 +1,12 @@
+,dtype
+load_mw,float64
+temperature_2m,float64
+relative_humidity_2m,int64
+wind_speed_10m,float64
+shortwave_radiation,float64
+cloud_cover,int64
+hour,int32
+day_of_week,int32
+month,int32
+is_weekend,float64
+is_holiday,float64

@@ -1,0 +1,12 @@
+,nunique
+is_holiday,2
+is_weekend,2
+day_of_week,7
+month,12
+hour,24
+relative_humidity_2m,86
+cloud_cover,101
+wind_speed_10m,458
+temperature_2m,471
+shortwave_radiation,909
+load_mw,48100
